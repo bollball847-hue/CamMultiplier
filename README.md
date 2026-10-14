@@ -17,6 +17,8 @@ filter, so you can place effects behind and in front of yourself.
 - 720p or 1080p, optional mirroring
 - English and German interface (switchable in the program)
 - Remembers your settings
+  
+ <img width="481" height="505" alt="programm-preview" src="https://github.com/user-attachments/assets/b18774dd-4a1a-418b-821e-d9588187967e" />
 
 ## Requirements
 
