@@ -34,6 +34,10 @@ filter, so you can place effects behind and in front of yourself.
 The installer also sets up 3 virtual cameras named "Cam Multiplier", "Cam Multiplier #2" and
 "Cam Multiplier #3". You can change the name and the number any time with **Set up cameras**.
 
+**Verify the download:**
+SHA256 of `CamMultiplier-Setup.exe`: `2d73f3ced199a290f4c5dfc616048b1b74dc6250ace32ff46090321bd2a9828a`
+([VirusTotal scan](https://www.virustotal.com/gui/file/2d73f3ced199a290f4c5dfc616048b1b74dc6250ace32ff46090321bd2a9828a))
+
 ## Usage
 
 1. Close every app that is currently using your webcam (including OBS sources that use it directly).
@@ -47,8 +51,8 @@ The installer also sets up 3 virtual cameras named "Cam Multiplier", "Cam Multip
 Needs Python 3.10 or newer on Windows.
 
 ```
-git clone https://github.com/bollball847-hue/cam-multiplier.git
-cd cam-multiplier
+git clone https://github.com/bollball847-hue/CamMultiplier.git
+cd CamMultiplier
 pip install -r requirements.txt
 python cam_multiplier.py
 ```
