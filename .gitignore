@@ -1,0 +1,7 @@
+dist/
+build/
+installer_output/
+driver/
+__pycache__/
+*.spec
+*.pyc
