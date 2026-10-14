@@ -38,7 +38,7 @@ The installer also sets up 3 virtual cameras named "Cam Multiplier", "Cam Multip
 
 **Verify the download:**
 SHA256 of `CamMultiplier-Setup.exe`: `2d73f3ced199a290f4c5dfc616048b1b74dc6250ace32ff46090321bd2a9828a`
-([VirusTotal scan](https://www.virustotal.com/gui/file/2d73f3ced199a290f4c5dfc616048b1b74dc6250ace32ff46090321bd2a9828a))
+ ([VirusTotal scan](https://www.virustotal.com/gui/file/2d73f3ced199a290f4c5dfc616048b1b74dc6250ace32ff46090321bd2a9828a))
 
 ## Usage
 
