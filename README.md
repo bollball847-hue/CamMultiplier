@@ -1,7 +1,9 @@
 <p align="center"><img src="assets/logo.png" alt="Cam Multiplier" width="160"></p>
-#This repository is currently being updated and renamed. Thanks for your patience!
+
 
 # Cam Multiplier
+
+## This repository is currently being updated and renamed. Thanks for your patience!
 
 Duplicate **one** webcam into **several virtual cameras** on Windows.
 
