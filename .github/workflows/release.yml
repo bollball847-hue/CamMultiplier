@@ -1,0 +1,84 @@
+# Repository path: .github/workflows/release.yml
+# Builds the installer on GitHub whenever a tag like v1.1.0 is created,
+# and attaches it to the release together with its SHA256 checksum.
+name: Build release
+
+on:
+  push:
+    tags: ["v*"]
+  workflow_dispatch:   # manual test run (Actions tab -> Run workflow), builds only, no release
+
+permissions:
+  contents: write
+
+jobs:
+  build:
+    runs-on: windows-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+
+      - name: Install Python dependencies
+        run: |
+          python -m pip install --upgrade pip
+          pip install -r requirements.txt pyinstaller
+
+      - name: Download Unity Capture driver files
+        shell: pwsh
+        run: |
+          New-Item -ItemType Directory -Force -Path driver | Out-Null
+          $base = "https://raw.githubusercontent.com/schellingb/UnityCapture/master/Install"
+          foreach ($f in "UnityCaptureFilter32.dll", "UnityCaptureFilter64.dll") {
+            Invoke-WebRequest -UseBasicParsing "$base/$f" -OutFile "driver/$f"
+          }
+
+      - name: Build program with PyInstaller
+        shell: pwsh
+        run: |
+          python -m PyInstaller --noconfirm --clean --onedir --windowed --name CamMultiplier --icon assets/icon.ico --add-data "assets;assets" --collect-all pygrabber --collect-submodules comtypes cam_multiplier.py
+          if (-not (Test-Path dist/CamMultiplier/CamMultiplier.exe)) { throw "PyInstaller build failed" }
+
+      - name: Determine version
+        id: ver
+        shell: pwsh
+        run: |
+          if ($env:GITHUB_REF -like "refs/tags/v*") { $v = $env:GITHUB_REF_NAME.TrimStart("v") } else { $v = "0.0.0-dev" }
+          "version=$v" >> $env:GITHUB_OUTPUT
+
+      - name: Install Inno Setup if missing
+        shell: pwsh
+        run: |
+          $iscc = "${env:ProgramFiles(x86)}\Inno Setup 6\ISCC.exe"
+          if (-not (Test-Path $iscc)) { choco install innosetup -y --no-progress }
+
+      - name: Build installer
+        shell: pwsh
+        run: |
+          & "${env:ProgramFiles(x86)}\Inno Setup 6\ISCC.exe" "/DAppVersion=${{ steps.ver.outputs.version }}" installer.iss
+          if (-not (Test-Path installer_output/CamMultiplier-Setup.exe)) { throw "Installer build failed" }
+
+      - name: Checksum and release notes
+        id: hash
+        shell: pwsh
+        run: |
+          $h = (Get-FileHash installer_output/CamMultiplier-Setup.exe -Algorithm SHA256).Hash.ToLower()
+          "sha256=$h" >> $env:GITHUB_OUTPUT
+          if (Test-Path RELEASE_NOTES.md) { Copy-Item RELEASE_NOTES.md notes.md } else { Set-Content notes.md "" }
+          Add-Content notes.md ""
+          Add-Content notes.md ("SHA256 of CamMultiplier-Setup.exe: " + $h)
+
+      - uses: actions/upload-artifact@v4
+        with:
+          name: CamMultiplier-Setup
+          path: installer_output/CamMultiplier-Setup.exe
+
+      - name: Publish release
+        if: startsWith(github.ref, 'refs/tags/v')
+        uses: softprops/action-gh-release@v2
+        with:
+          files: installer_output/CamMultiplier-Setup.exe
+          body_path: notes.md
+        
