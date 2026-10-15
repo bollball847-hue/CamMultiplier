@@ -1,3 +1,5 @@
+<p align="center"><img src="assets/logo.png" alt="Cam Multiplier" width="160"></p>
+
 # Cam Multiplier
 
 Duplicate **one** webcam into **several virtual cameras** on Windows.
@@ -11,14 +13,17 @@ filter, so you can place effects behind and in front of yourself.
 
 ## Features
 
-- Pick your webcam and see a live preview
-- 1 to 10 virtual cameras from a single webcam
+- Pick your webcam and see a live preview, or use a network stream (link) as the source
+- 1 to 10 virtual cameras from a single source
+- Settings per copy: mirroring, output size, frame rate, zoom, rotation, brightness and contrast
+- Automatic reconnect when the webcam is unplugged or the stream stops
+- Plugins, including a built-in LAN stream to watch the copies on a phone or another PC
 - Choose the name of the virtual cameras (a number is added automatically)
-- 720p or 1080p, optional mirroring
+- 720p or 1080p camera resolution
 - English and German interface (switchable in the program)
 - Remembers your settings
-  
- <img width="481" height="505" alt="programm-preview" src="https://github.com/user-attachments/assets/b18774dd-4a1a-418b-821e-d9588187967e" />
+
+<img width="597" height="562" alt="grafik" src="https://github.com/user-attachments/assets/723a98bc-c389-4635-9c1c-1103d32d7524" />
 
 ## Requirements
 
@@ -36,10 +41,6 @@ filter, so you can place effects behind and in front of yourself.
 The installer also sets up 3 virtual cameras named "Cam Multiplier", "Cam Multiplier #2" and
 "Cam Multiplier #3". You can change the name and the number any time with **Set up cameras**.
 
-**Verify the download:**
-SHA256 of `CamMultiplier-Setup.exe`: `2d73f3ced199a290f4c5dfc616048b1b74dc6250ace32ff46090321bd2a9828a`
- ([VirusTotal scan](https://www.virustotal.com/gui/file/2d73f3ced199a290f4c5dfc616048b1b74dc6250ace32ff46090321bd2a9828a))
-
 ## Usage
 
 1. Close every app that is currently using your webcam (including OBS sources that use it directly).
@@ -47,6 +48,24 @@ SHA256 of `CamMultiplier-Setup.exe`: `2d73f3ced199a290f4c5dfc616048b1b74dc6250ac
 3. In OBS Studio add a **Video Capture Device** source for each copy and select one of the
    "Cam Multiplier" devices per source.
 4. Keep Cam Multiplier running while you use the virtual cameras.
+
+### Using a network stream as the source
+
+Choose **Stream from link ...** in the camera list and paste a link. This can be the link that the
+**LAN Stream** plugin of another Cam Multiplier shows (for example from a second PC), or any other
+http/rtsp video stream. The copies work exactly as with a webcam.
+
+## Plugins
+
+Open **Plugins** in the program to switch plugins on or off. Changes apply the next time you press **Start**.
+
+- **LAN Stream** (built in): watch the copies in a browser on another device in the same network. While it is
+  running, the link is shown in the main window. The link contains a random access key, but the stream is not
+  encrypted, so only use it in networks you trust. On first start Windows may ask to allow network access:
+  allow private networks.
+- **External plugins:** copy a plugin folder into `%APPDATA%\CamMultiplier\plugins` (button **Open plugin folder**).
+  Plugins are Python code and run with the same rights as the program, so only install plugins you trust.
+  How to write one: see [PLUGINS.md](PLUGINS.md).
 
 ## Run from source (Python)
 
@@ -78,14 +97,12 @@ The virtual cameras need the Unity Capture driver. Download `UnityCaptureFilter3
 | Laptop shows several cameras | Choose the one that shows a normal picture. Infrared (Windows Hello) cameras only show black or grey. |
 | Virtual cameras missing in OBS | Click **Set up cameras**, then restart OBS. |
 | Program closes unexpectedly | Send the files in `%APPDATA%\CamMultiplier\` (`app.log`, `crash.log`) with a new issue. |
-
 ## Credits and license
 
-Cam Multiplier is licensed under the **GPL-2.0** (see `LICENSE`).
+Cam Multiplier is licensed under the **[MIT / GPL-2.0]** license (see `LICENSE`).
 
 It uses [Unity Capture](https://github.com/schellingb/UnityCapture) by Bernhard Schelling (MIT license)
-for the virtual camera devices, [pyvirtualcam](https://github.com/letmaik/pyvirtualcam) (GPL-2.0),
-[OpenCV](https://opencv.org/), [Pillow](https://python-pillow.org/) and
+for the virtual camera devices, [OpenCV](https://opencv.org/), [Pillow](https://python-pillow.org/) and
 [pygrabber](https://github.com/andreaschiavinato/python_grabber). See `THIRD_PARTY_LICENSES.txt`.
 
 Not affiliated with OBS Studio, Microsoft or any other mentioned product.
