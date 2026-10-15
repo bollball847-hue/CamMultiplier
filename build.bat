@@ -11,6 +11,10 @@ REM --- Dateien pruefen ---
 if not exist cam_multiplier.py goto missing_script
 if not exist installer.iss goto missing_iss
 if not exist THIRD_PARTY_LICENSES.txt goto missing_lic
+if not exist cam_multiplier_plugin.py goto missing_plugin
+if not exist plugin_lan_stream.py goto missing_plugin
+if not exist unitycapture_sender.py goto missing_plugin
+if not exist assets\icon.ico goto missing_assets
 
 REM --- Python finden ---
 set PY=
@@ -29,9 +33,9 @@ if not exist driver\UnityCaptureFilter32.dll goto nodriver
 REM --- Programm bauen ---
 echo.
 echo [1/2] Programm wird gebaut ...
-%PY% -m pip install --upgrade pyinstaller opencv-python pyvirtualcam pygrabber pillow
+%PY% -m pip install --upgrade pyinstaller opencv-python pygrabber pillow
 if errorlevel 1 goto fail
-%PY% -m PyInstaller --noconfirm --clean --onedir --windowed --name CamMultiplier --collect-all pyvirtualcam --collect-all pygrabber --collect-submodules comtypes cam_multiplier.py
+%PY% -m PyInstaller --noconfirm --clean --onedir --windowed --name CamMultiplier --icon assets\icon.ico --add-data "assets;assets" --collect-all pygrabber --collect-submodules comtypes cam_multiplier.py
 if errorlevel 1 goto fail
 if not exist dist\CamMultiplier\CamMultiplier.exe goto fail
 
@@ -53,6 +57,12 @@ echo FEHLER: cam_multiplier.py liegt nicht in diesem Ordner.
 goto end
 :missing_iss
 echo FEHLER: installer.iss liegt nicht in diesem Ordner.
+goto end
+:missing_plugin
+echo FEHLER: cam_multiplier_plugin.py, plugin_lan_stream.py oder unitycapture_sender.py liegt nicht in diesem Ordner.
+goto end
+:missing_assets
+echo FEHLER: Der Ordner assets mit icon.ico fehlt.
 goto end
 :missing_lic
 echo FEHLER: THIRD_PARTY_LICENSES.txt liegt nicht in diesem Ordner.

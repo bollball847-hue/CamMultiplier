@@ -1,12 +1,12 @@
-Cam Multiplier is free software, licensed under the GNU General Public License,
-version 2 (GPL-2.0), because it bundles pyvirtualcam, which is GPL-2.0 licensed.
-The full license text is in the LICENSE file of the project.
-
-Cam Multiplier uses the following third-party components:
+Cam Multiplier uses the following third-party components. The license of Cam Multiplier
+itself is in the LICENSE file of the project.
 
 == Unity Capture (UnityCaptureFilter32.dll / UnityCaptureFilter64.dll) ==
-MIT License
+The virtual camera driver. MIT License
 https://github.com/schellingb/UnityCapture
+
+Cam Multiplier talks to this driver through its documented shared-memory interface
+(unitycapture_sender.py), no code of the driver is included in the Python files.
 
 Copyright (c) 2018 Bernhard Schelling
 Based on UnityCam, Copyright (c) 2016 MHD Yamen Saraiji
@@ -30,7 +30,6 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 
 == Python libraries (installed via pip and bundled in the installer) ==
-- pyvirtualcam: GPL-2.0 (https://github.com/letmaik/pyvirtualcam)
 - pygrabber: MIT (https://github.com/andreaschiavinato/python_grabber)
 - OpenCV (opencv-python), Pillow, NumPy, comtypes: see the license files on their
   PyPI / project pages. Check the current licenses before each release.

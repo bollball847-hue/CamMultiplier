@@ -1,9 +1,13 @@
 ; Inno Setup script for Cam Multiplier
 ; Run build.bat first, it builds the program into dist\CamMultiplier.
 
+#ifndef AppVersion
+  #define AppVersion "1.2.0"
+#endif
+
 [Setup]
 AppName=Cam Multiplier
-AppVersion=1.0
+AppVersion={#AppVersion}
 AppPublisher=Thomas
 DefaultDirName={autopf}\Cam Multiplier
 DefaultGroupName=Cam Multiplier
@@ -15,6 +19,7 @@ OutputDir=installer_output
 Compression=lzma2
 SolidCompression=yes
 WizardStyle=modern
+SetupIconFile=assets\icon.ico
 UninstallDisplayIcon={app}\CamMultiplier.exe
 
 [Languages]

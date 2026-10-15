@@ -1,4 +1,3 @@
 opencv-python
-pyvirtualcam
 pygrabber
 pillow
