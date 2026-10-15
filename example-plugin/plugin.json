@@ -1,0 +1,12 @@
+{
+  "id": "grayscale-example",
+  "name": {"en": "Grayscale (example)", "de": "Graustufen (Beispiel)"},
+  "description": {
+    "en": "Example plugin: makes one copy black and white.",
+    "de": "Beispiel-Plugin: macht eine Kopie schwarz-weiß."
+  },
+  "version": "1.0",
+  "api": 1,
+  "entry": "plugin.py",
+  "class": "GrayscalePlugin"
+}
